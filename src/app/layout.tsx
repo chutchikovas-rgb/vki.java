@@ -36,7 +36,7 @@ const RootLayout = async ({ children }: Readonly<{ children: React.ReactNode }>)
  
   let students: StudentInterface[];
 
-  // выполняется на сервере - загрузка групп
+  // // выполняется на сервере - загрузка групп
   await queryClient.prefetchQuery({
     queryKey: ['students'],
     queryFn: async () => {
