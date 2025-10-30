@@ -1,4 +1,4 @@
-import { deleteStudentDb } from "@/db/studentsDb";
+import { deleteStudentDb } from "@/db/studentDb";
 import { type NextApiRequest } from "next/types";
 
 export async function DELETE(

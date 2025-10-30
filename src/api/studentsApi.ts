@@ -7,7 +7,9 @@ export const getStudentsApi = async (): Promise<StudentInterface[]> => {
     if (!response.ok) {
       throw new Error(`Ошибка HTTP: ${response.status}${response.statusText}`);
     }
+
     const students = await response.json() as StudentInterface[];
+
     return students;
   }
   catch (err) {
@@ -16,22 +18,47 @@ export const getStudentsApi = async (): Promise<StudentInterface[]> => {
   }
 };
 
-export const deleteStudentApi = async (id: number): Promise<void> => {
+
+export const deleteStudentApi = async (id: any): Promise<number | null> => {
+  console.log('deleteAtudentApi', id);
+  debugger;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}students`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}students/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id }),
     });
 
     if (!response.ok) {
-      throw new Error(`Ошибка HTTP: ${response.status}${response.statusText}`);
+      throw new Error(`Ошибка HTTP: ${response.status} ${response.statusText}`);
     }
-  }
-  catch (err) {
+      console.log('deleteAtudentApi ok', id);
+    debugger;
+
+    const data = await response.json();
+
+    return data.id ?? null;
+  } catch (err) {
     console.log('>>> deleteStudentApi', err);
-    throw err; // или можно просто return; если не хочешь пробрасывать ошибку
+    return null;
+  }
+};
+
+
+export const addStudentApi = async (studentData: any): Promise<number | null> => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}students`, {
+      method: 'POST',
+      body: JSON.stringify(studentData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка HTTP: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    return data.id ?? null;
+  } catch (err) {
+    console.log('>>> addStudentApi', err);
+    return null;
   }
 };

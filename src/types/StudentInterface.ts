@@ -6,6 +6,8 @@ interface StudentInterface {
   middleName: string;
   contacts?: string;
   groupId: number;
+  isDeleted?: boolean;
+  isNew?: boolean;
 };
 
 export default StudentInterface;

@@ -1,43 +1,30 @@
-import { getStudentsDb, addStudentDb } from '@/db/studentsDb';
-import { NextRequest } from 'next/server';
+import StudentInList from '@/components/Students/StudentInList/StudentInList';
+import { getStudentsDb } from '@/db/studentDb';
+import { addStudentDb } from '@/db/studentDb';
+
+
 
 export async function GET(): Promise<Response> {
   const students = await getStudentsDb();
-
   return new Response(JSON.stringify(students), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
   });
-};
+}
 
-export async function POST(request: NextRequest): Promise<Response> {
-  const body = await request.json();
+export async function POST(request: Request): Promise<Response> {
+  try {
+    const data = await request.json();
+    delete data['id'];
+    const newStudent = await addStudentDb(data); 
 
-  const id = await addStudentDb({
-    uuid: body.uuid,
-    lastName: body.lastName,
-    firstName: body.firstName,
-    middleName: body.middleName,
-    contacts: body.contacts,
-    groupId: body.groupId,
-  });
-
-  return new Response(
-    JSON.stringify({
-      id,
-      uuid: body.uuid,
-      lastName: body.last_name,
-      firstName: body.first_name,
-      middleName: body.middle_name,
-      contacts: body.contacts,
-      groupId: body.groupId,
-    }),
-    {
+    return new Response(JSON.stringify(newStudent), {
       status: 201,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Ошибка при добавлении студента' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }

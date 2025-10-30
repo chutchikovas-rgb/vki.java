@@ -1,19 +1,49 @@
 'use client';
+
 import useStudents from '@/hooks/useStudents';
 import type StudentInterface from '@/types/StudentInterface';
-import Student from './Student'; 
-import styles from './Student.module.scss'; 
+import styles from './Students.module.scss';
+import StudentInList from './StudentInList/StudentInList';
+import AddStudent, { type FormFields } from './AddStudent/AddStudent';
+import { v4 as uuidv4 } from 'uuid';
 
 const Students = (): React.ReactElement => {
-  const { students, removeStudent } = useStudents(); 
+  const {
+    students,
+    deleteStudentMutate,
+    addStudentMutate,
+  } = useStudents();
+
+  const onDeleteHandler = (studentId: number): void => {
+    if (confirm('Удалить студента?')) {
+      debugger; 
+      console.log('onDeleteHandler', studentId);
+
+      deleteStudentMutate(studentId);
+    }
+  };
+
+  const onAddHandler = (studentFormField: FormFields): void => {
+    debugger; 
+    console.log('onAddHandler', studentFormField);
+
+    addStudentMutate({
+      id: -1,
+      ...studentFormField,
+      groupId: 1,
+      uuid: uuidv4(),
+    });
+  };
 
   return (
     <div className={styles.Students}>
+      <AddStudent onAdd={onAddHandler} />
+
       {students.map((student: StudentInterface) => (
-        <Student
-          key={student.id}
+        <StudentInList
+          key={student.id || student.uuid}
           student={student}
-          onDelete={removeStudent} 
+          onDelete={onDeleteHandler}
         />
       ))}
     </div>
