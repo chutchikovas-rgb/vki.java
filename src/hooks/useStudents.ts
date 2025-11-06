@@ -8,11 +8,12 @@ import type StudentInterface from '@/types/StudentInterface';
 
 interface StudentsHookInterface {
   students: StudentInterface[];
+  student: StudentInterface | null;
   deleteStudentMutate: (studentId: number) => void;
   addStudentMutate: (student: StudentInterface) => void;
 }
 
-const useStudents = (): StudentsHookInterface => {
+const useStudents = (studentId?: number): StudentsHookInterface => {
   const queryClient = useQueryClient();
 
   const { data, refetch } = useQuery({
@@ -20,6 +21,11 @@ const useStudents = (): StudentsHookInterface => {
     queryFn: () => getStudentsApi(),
     enabled: false,
   });
+
+  const student = studentId 
+    ? data?.find((student: StudentInterface) => student.id === studentId) || null
+    : null;
+
 
   /**
    * Мутация удаления студента
@@ -118,6 +124,7 @@ const useStudents = (): StudentsHookInterface => {
 
   return {
     students: data ?? [],
+    student,
     deleteStudentMutate: deleteStudentMutate.mutate,
     addStudentMutate: addStudentMutate.mutate,
   };

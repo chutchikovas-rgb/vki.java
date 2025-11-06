@@ -14,10 +14,10 @@ const StudentInList = ({ student, onDelete }: Props): React.ReactElement => {
   const modifier = student.isDeleted ? '--isDeleted' : student.isNew ? '--isNew' : '';
 
   return (
-    <div className={`${styles.Student} ${styles[modifier]}`}>
+    <a className={`${styles.Student} ${styles[modifier]}`}>
       {`${student.id || 'xxxx'} - ${student.lastName} ${student.firstName} ${student.middleName}`}
       <button onClick={onDeleteHandler}>Удалить</button>
-    </div>
+    </a>
   );
 };
 
