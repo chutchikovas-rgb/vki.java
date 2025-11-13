@@ -1,14 +1,16 @@
 import type StudentInterface from '@/types/StudentInterface';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import styles from './AddStudent.module.scss';
+import GroupInterface from '@/types/GroupInterface';
 
-export type FormFields = Pick<StudentInterface, 'firstName' | 'lastName' | 'middleName'>;
+export type FormFields = Pick<StudentInterface, 'firstName' | 'lastName' | 'middleName' | 'groupId'>;
 
 interface Props {
   onAdd: (studentForm: FormFields) => void;
+  groups: GroupInterface[];
 }
 
-const AddStudent = ({ onAdd }: Props): React.ReactElement => {
+const AddStudent = ({ onAdd, groups }: Props): React.ReactElement => {
   const {
     register,
     handleSubmit,
@@ -19,7 +21,7 @@ const AddStudent = ({ onAdd }: Props): React.ReactElement => {
 
   return (
     <div className={styles.AddStudent}>
-      <h2>Добавления студента</h2>
+      <h2>Добавление студента</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -40,6 +42,13 @@ const AddStudent = ({ onAdd }: Props): React.ReactElement => {
           {...register('middleName', { required: true })}
         />
         {errors.middleName && <div>Обязательное поле</div>}
+
+        <select id="mySelect" className={styles.GroupSelect} {...register('groupId', { required: true })}>
+          <option value="" key={0}>--Выберите группу--</option>
+          {groups.map(group => (
+            <option value={group.id} key={group.id}>{group.name}</option>
+          ))}
+        </select>
 
         <input type="submit" value="Добавить" />
       </form>

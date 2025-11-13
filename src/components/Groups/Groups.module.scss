@@ -1,3 +1,18 @@
 .Groups {
   
 }
+
+.StudentInGroup {
+    margin-left: 24px;
+    display: block;
+}
+.StudentInGroup a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.StudentInGroup a:hover {
+    color: rgb(71, 71, 71);
+}

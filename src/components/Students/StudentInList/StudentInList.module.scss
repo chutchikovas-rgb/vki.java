@@ -3,8 +3,22 @@
   display: grid;
   gap: 10px;
   grid-template-columns: 370px auto;
+  text-decoration: none;
+  color: black;
+  text-decoration: underline;
 
-  transition: opacity 0.9s ease-in-out;
+  transition: opacity 0.9s ease-in-out, color 0.2s;
+
+  button {
+    text-decoration: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: fit-content;
+  }
+}
+
+.Student:hover {
+  color: gray;
 }
 
 .--isDeleted {

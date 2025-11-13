@@ -1,3 +1,5 @@
+import styles from './BreadcrumbsItem.module.scss';
+
 interface BreadcrumbItemProps {
   children: React.ReactNode;
   href?: string;
@@ -14,7 +16,7 @@ export const BreadcrumbItem = ({ children, href, isCurrent = false }: Breadcrumb
   }
 
   return href ? (
-    <a href={href}>
+    <a className={`${styles.BreadcrumbsItem}`} href={href}>
       {children}
     </a>
   ) : (

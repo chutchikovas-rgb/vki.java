@@ -20,9 +20,10 @@ export const Student = ({ student }: Props): React.ReactElement => {
       <div>
         <h1>{student.lastName} {student.firstName} {student.middleName}</h1>
         <p>ID: {student.id}</p>
-        <p>ID группы: {student.groupId}</p>
         {student.contacts && <p>Контакты: {student.contacts}</p>}
         {student.uuid && <p>UUID: {student.uuid}</p>}
+        <p>Группа: {student.group?.name}</p>
+        {student.contacts && <p>Контактные данные: {student.contacts}</p>}
       </div>
     </div>
   );
