@@ -44,7 +44,7 @@ const AddStudent = ({ onAdd, groups }: Props): React.ReactElement => {
         {errors.middleName && <div>Обязательное поле</div>}
 
         <select id="mySelect" className={styles.GroupSelect} {...register('groupId', { required: true })}>
-          <option value="" key={0}>--Выберите группу--</option>
+          <option value="" key={0}>Группа</option>
           {groups.map(group => (
             <option value={group.id} key={group.id}>{group.name}</option>
           ))}
